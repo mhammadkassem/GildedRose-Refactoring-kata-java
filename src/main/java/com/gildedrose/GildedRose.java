@@ -7,92 +7,66 @@ class GildedRose
     public static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
     public static final String CONJURED = "Conjured Mana Cake";
     Item[] items;
+
     public GildedRose(Item[] items)
     {
+//        for(int i =0; i<items.length; i++)
+//        {
+//            this.items[i] = ItemBuilder.buildItem(items[i]);
+//            //ItemBuilder.buildItem(items[i]);
+//        }
         this.items = items;
+
     }
+
 
     public void updateQuality()
     {
-
-        for (int i = 0; i < items.length; i++)
+        for(int i =0; i < items.length; i++)
         {
+            //items[i].update();
             String itemName = items[i].name;
-            //int items[i].quality = items[i].quality;
-            //int items[i].sellIn = items[i].sellIn;
+            int itemSellIn = items[i].sellIn;
+            int itemQuality = items[i].quality;
+            //ItemBuilder itemBuilder = new ItemBuilder(itemName,itemSellIn,itemQuality);
 
-
-            if (!itemName.equals(AGED_BRIE) && !itemName.equals(BACKSTAGE_PASSES_TO_CONCERT))
+            if(itemName == AGED_BRIE)
             {
-                if (items[i].quality > 0)
-                {
-                    if (!itemName.equals(SULFURAS))
-                    {
-                        if(!itemName.equals(CONJURED))
-                        {
-                            items[i].quality = items[i].quality - 1;
-                        }
-                        else items[i].quality = items[i].quality - 2;
+                //ItemBuilder agedBrie2 = new AgedBrie(itemSellIn,itemQuality);
+                AgedBrie agedBrie = new AgedBrie(itemSellIn,itemQuality);
+                agedBrie.update();
+                items[i].sellIn = agedBrie.agedBrieSellIn;
+                items[i].quality = agedBrie.agedBrieQuality;
 
-                    }
-                }
-            } 
+            }
+            else if(itemName == SULFURAS)
+            {
+                Sulfurus sulfurus = new Sulfurus(itemSellIn);
+                sulfurus.update();
+                items[i].sellIn = sulfurus.sulfurusSellIn;
+            }
+            else if(itemName == BACKSTAGE_PASSES_TO_CONCERT)
+            {
+                Backstage backstage = new Backstage(itemSellIn,itemQuality);
+                backstage.update();
+                items[i].sellIn = backstage.backstageSellIn;
+                items[i].quality = backstage.backstageQuality;
+            }
+
+            else if(itemName == CONJURED)
+            {
+                Conjured conjured = new Conjured(itemSellIn,itemQuality);
+                conjured.update();
+                items[i].sellIn = conjured.conjuredSellIn;
+                items[i].quality = conjured.conjuredQuality;
+            }
+
             else
             {
-                if (items[i].quality < 50)
-                {
-                    items[i].quality = items[i].quality + 1;
-                    if (itemName.equals(BACKSTAGE_PASSES_TO_CONCERT))
-                    {
-                        if (items[i].sellIn < 11)
-                        {
-                            if (items[i].quality < 50)
-                            {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-
-                        if (items[i].sellIn < 6)
-                        {
-                            if (items[i].quality < 50)
-                            {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!itemName.equals(SULFURAS))
-            {
-                items[i].sellIn = items[i].sellIn - 1;
-            }
-
-            if (items[i].sellIn < 0)
-            {
-                if (!itemName.equals(AGED_BRIE))
-                {
-                    if (!itemName.equals(BACKSTAGE_PASSES_TO_CONCERT))
-                    {
-                        if (items[i].quality > 0)
-                        {
-                            if (!itemName.equals(SULFURAS))
-                            {
-                                items[i].quality = items[i].quality - 1;
-                            }
-                        }
-                    } else
-                    {
-                        items[i].quality = items[i].quality - items[i].quality;
-                    }
-                }
-                else
-                {
-                    if (items[i].quality < 50)
-                    {
-                        items[i].quality = items[i].quality + 1;
-                    }
-                }
+                ItemBuilder differentItem = new ItemBuilder(items[i].name,itemSellIn,itemQuality);
+                differentItem.update();
+                items[i].sellIn = differentItem.sellIn;
+                items[i].quality = differentItem.quality;
             }
         }
     }

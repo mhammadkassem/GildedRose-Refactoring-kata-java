@@ -16,16 +16,18 @@ class GildedRoseTest {
 
 
     @Test
-    void ifSellInBecomesZeroQualityDegradesTwice() {
+    void ifSellInBecomesZeroQualityDegradesTwice() //done
+    {
         //Item item = new Item("foo",1,1);
-        Item[] items = {new Item("foo", 0, 2)};
+        Item[] items = {new Item("Conjured Mana Cake", 1, 5)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(0, app.items[0].quality);
+        assertEquals(3, app.items[0].quality);
     }
 
     @Test
-    void qualityIsNeverNegative() {
+    void qualityIsNeverNegative()   //done
+    {
         Item[] items = {new Item("foo", 100, 0)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
@@ -33,16 +35,25 @@ class GildedRoseTest {
     }
 
     @Test
-    void agedBriesQualityIncreases()
+    void agedBriesQualityIncreases() //done
     {
-        Item[] items = {new Item("Aged Brie", 10, 10)};
+        Item[] items = {new Item("Aged Brie", 1, 10)}; //
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(11, app.items[0].quality);
     }
 
     @Test
-    void qualityNotMoreThanFifty()
+    void agedBriesQualityIncreasesTwiceIfSellinZero() //done
+    {
+        Item[] items = {new Item("Aged Brie", 0, 10)}; //
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(12, app.items[0].quality);
+    }
+
+    @Test
+    void qualityNotMoreThanFifty() //done
     {
         Item[] items = {new Item("Aged Brie", 10, 50)};
         GildedRose app = new GildedRose(items);
@@ -84,4 +95,7 @@ class GildedRoseTest {
         assertEquals(8, app.items[0].quality);
 
     }
+    //......................................... TEST FOR REFACTORING .............................../
+
+
 }
